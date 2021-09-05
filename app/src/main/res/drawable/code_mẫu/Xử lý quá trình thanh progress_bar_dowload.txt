@@ -1,0 +1,62 @@
+package com.example.progressbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    Button button ;
+    ProgressBar pbXuLy ;
+    TextView textView ;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        AnhXa();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // dùng hàm xử lý đếm ngược countdownTIMER
+                // truyền vào 2 biến long :
+                // biến long đầu tiên : tính theo đơn vị mili giây : tức là 1.10-3 ;
+                // biến long thứ hai : tính theo đơn vị mili giấy : đếm ngược mỗi lần
+                CountDownTimer countDownTimer = new CountDownTimer(11000,1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        int xuLy = pbXuLy.getProgress();
+                        int wait = pbXuLy.getSecondaryProgress();
+                        if (pbXuLy.getProgress() >= pbXuLy.getMax()) {
+                            xuLy = 0;
+                            wait = xuLy + 10;
+                        }
+                        pbXuLy.setProgress(xuLy + 10);
+                        pbXuLy.setSecondaryProgress(wait + 10);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        textView.setText("Qúa trình dowload hoàn tất !!!");
+                        Toast.makeText(MainActivity.this, "Dowload Finish", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                };
+                countDownTimer.start();
+            }
+        });
+    }
+    public void AnhXa(){
+        button = (Button) findViewById(R.id.btn_dwn);
+        pbXuLy = (ProgressBar) findViewById(R.id.progressBar2);
+        textView = (TextView) findViewById(R.id.txt_dowload);
+    }
+}

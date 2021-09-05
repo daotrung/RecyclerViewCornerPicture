@@ -1,0 +1,35 @@
+  Button button;
+    EditText editText_1 , editText_2 ;
+    TextView textView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        AnhXa();
+
+        // Gọi tới sự kiện của button
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // gọi 2 biến String để nhập hai số đầu cuối của hàm random :
+                String chuoi1 = editText_1.getText().toString();
+                String chuoi2 = editText_2.getText().toString();
+                // vấn đề để xử lý đc hàm random , cần truyền vào là các con số , ta cần phải chuyển đổi
+                int min = Integer.parseInt(chuoi1);
+                int max = Integer.parseInt(chuoi2);
+                // dùng đến hàm random
+                Random random = new Random();
+                int number = random.nextInt(max - min +1 )+ min;
+                // ta phải hiển thị ra màn hình kết quả sau khi random
+                textView.setText(String.valueOf(number));
+            }
+        });
+    }
+
+
+    public void AnhXa(){
+        button = (Button) findViewById(R.id.button);
+        editText_1 = (EditText) findViewById(R.id.edt_Number_1);
+        editText_2 = (EditText) findViewById(R.id.edt_Number_2);
+        textView = (TextView) findViewById(R.id.textView);
+    }

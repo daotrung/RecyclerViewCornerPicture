@@ -1,0 +1,90 @@
+package com.example.listview;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.BaseBundle;
+import android.os.Bundle;
+import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+
+    Button btnThem ,btnCapNhat, btnXoa;
+    ListView listView;
+    EditText editText;
+    int check = -1 ;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        AnhXa();
+
+        // b1 khai bao arraylist
+        ArrayList<String> arrayMonHoc = new ArrayList<>();
+        // b2 them tung phan tu cho list
+        arrayMonHoc.add("Andorid");
+        arrayMonHoc.add("PHP");
+        arrayMonHoc.add("HMTL/CSS");
+        arrayMonHoc.add("Javascript");
+        arrayMonHoc.add("iOS");
+        arrayMonHoc.add("C#");
+        arrayMonHoc.add("Bootstraps");
+        // b3 truyen du lieu vao 1 adapter
+        // truyen vao 3 tham so : 1. hien thi tren dau(activity ) , 2. dang hien thi cua list , 3. du lieu do vao (o day la arrayMonHoc);
+        ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1,arrayMonHoc);
+        // b4 truyen vao adapter cho listView bang lenh set
+        listView.setAdapter(adapter);
+
+        // goi toi su kien cua buton
+        btnThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String monhoc = editText.getText().toString();
+                arrayMonHoc.add(monhoc);
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+        // goi toi su kien
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                 editText.setText(arrayMonHoc.get(position));
+                 check = position;
+            }
+        });
+        btnCapNhat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayMonHoc.set(check,editText.getText().toString());
+                adapter.notifyDataSetChanged();
+            }
+        });
+        btnXoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayMonHoc.remove(check);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+
+    }
+    public void AnhXa(){
+        btnXoa = (Button) findViewById(R.id.btn_Xoa) ;
+
+        btnThem = (Button) findViewById(R.id.btnThem);
+        btnCapNhat = (Button) findViewById(R.id.btn_CapNhat);
+        listView = (ListView) findViewById(R.id.listviewmh);
+        editText = (EditText) findViewById(R.id.edtMonHoc);
+
+    }
+}

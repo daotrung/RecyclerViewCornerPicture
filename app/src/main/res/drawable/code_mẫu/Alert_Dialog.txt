@@ -1,0 +1,26 @@
+ AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        // thiêt lập tiêu đề
+        builder.setTitle("Xác nhận thoát");
+        // thiết lập icon
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        // thiết lập nội dung cho Dialog
+        builder.setMessage("Bạn chắc chắn muốn thoát không ?");
+        // thiết lập các nút lệnh để người dùng tương tác
+        builder.setPositiveButton("CÓ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();// đóng cửa sổ
+            }
+        });
+        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        // tạo cửa sổ dialog
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);// thiết lập phải chọn , ko chọn thì ko thoát cửa sổ dialog
+        // hiển thị cửa sổ này lên
+        dialog.show();
+    }

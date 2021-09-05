@@ -1,0 +1,96 @@
+package com.example.checkbox;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView textView ;
+    Button button;
+    CheckBox chk_android , chk_gra , chk_design , chk_net ;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        AnhXa();
+
+
+        // xu li su kien
+        chk_android.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+
+
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Toast.makeText(MainActivity.this, "Android", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Bạn bỏ chọn Android", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+        chk_gra.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Toast.makeText(MainActivity.this, "Graphics", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Bạn bỏ chọn Graphics", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        chk_design.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Toast.makeText(MainActivity.this, "Designers", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Bạn bỏ chọn Designers", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        chk_net.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Toast.makeText(MainActivity.this, "Network Administrator", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Bạn bỏ chọn Network administrator", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String chuoi = "Đã đăng ký môn : ";
+                if(chk_android.isChecked()){
+                    chuoi += chk_android.getText()+"\n";
+                }if(chk_gra.isChecked()){
+                    chuoi +=  chk_gra.getText()+"\n";
+                }if(chk_design.isChecked()){
+                    chuoi += chk_design.getText()+"\n";
+                }if(chk_net.isChecked()){
+                    chuoi += chk_net.getText()+"\n";
+                }
+                Toast.makeText(MainActivity.this, chuoi, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+    public void AnhXa(){
+        textView = (TextView) findViewById(R.id.tv);
+        chk_android = (CheckBox) findViewById(R.id.chk);
+        chk_gra = (CheckBox) findViewById(R.id.chk2);
+        chk_design = (CheckBox) findViewById(R.id.chk3);
+        chk_net = (CheckBox) findViewById(R.id.chk4);
+        button = (Button) findViewById(R.id.btn) ;
+    }
+}

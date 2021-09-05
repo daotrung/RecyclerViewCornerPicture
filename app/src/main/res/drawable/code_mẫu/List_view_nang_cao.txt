@@ -1,0 +1,119 @@
+// b1 tao class
+// b2 tao them 1 file xml chua cac du lieu ơ phan class trai cay
+
+public class TraiCay {
+    private String Ten ;
+    private String MoTa;
+    private  int Image;
+
+    public TraiCay(String ten, String moTa, int image) {
+        Ten = ten;
+        MoTa = moTa;
+        Image = image;
+    }
+
+    public String getTen() {
+        return Ten;
+    }
+
+    public void setTen(String ten) {
+        Ten = ten;
+    }
+
+    public String getMoTa() {
+        return MoTa;
+    }
+
+    public void setMoTa(String moTa) {
+        MoTa = moTa;
+    }
+
+    public int getImage() {
+        return Image;
+    }
+
+    public void setImage(int image) {
+        Image = image;
+    }
+}
+
+
+// b3 : tao 1 class TraiCayAdapter
+
+public class TraiCayAdapter extends BaseAdapter {
+
+    private Context context;
+    private  int layout;
+    private List<TraiCay> traiCayList ;
+
+
+    public TraiCayAdapter(Context context, int layout, List<TraiCay> traiCayList) {
+        this.context = context;
+        this.layout = layout;
+        this.traiCayList = traiCayList;
+    }
+
+    @Override
+    public int getCount() {
+        return traiCayList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(layout,null);
+
+        TextView txtTen = (TextView) convertView.findViewById(R.id.textviewTen);
+        TextView txtMoTa = (TextView) convertView.findViewById(R.id.textviewMoTa);
+        ImageView imgHinh = (ImageView) convertView.findViewById(R.id.imageviewHinh);
+
+        TraiCay traiCay = traiCayList.get(position);
+        txtTen.setText(traiCay.getTen());
+        txtMoTa.setText(traiCay.getMoTa());
+        imgHinh.setImageResource(traiCay.getImage());
+
+        return convertView;
+    }
+}
+
+// b4 cho anh vao và viết MainActivity
+
+
+
+public class MainActivity extends AppCompatActivity {
+
+    ListView lvTraiCay;
+    ArrayList<TraiCay> arrayTraiCay;
+    TraiCayAdapter adapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        AnhXa();
+        adapter = new TraiCayAdapter(this,R.layout.dong_trai_cay,arrayTraiCay);
+        lvTraiCay.setAdapter(adapter);
+    }
+    public void AnhXa(){
+        lvTraiCay = (ListView) findViewById(R.id.listViewTraiCay);
+        arrayTraiCay = new ArrayList<>();
+        arrayTraiCay.add(new TraiCay("Dâu Tây","Dâu Tây Đà Lạt",R.drawable.dau_tay));
+        arrayTraiCay.add(new TraiCay("Dưa hấu","Dưa hấu An Giang",R.drawable.dua_hau));
+        arrayTraiCay.add(new TraiCay("Hồng Xiêm","Hồng Xiêm nhà vườn",R.drawable.hong_xiem));
+        arrayTraiCay.add(new TraiCay("Quả khế","Quảkhế siêu ngọt",R.drawable.khe));
+        arrayTraiCay.add(new TraiCay("Mãng cầu","Đặc sản mãng cầu",R.drawable.mang_cau));
+        arrayTraiCay.add(new TraiCay("Quả Lê","Lê ngon Lê ngọt ",R.drawable.qua_le));
+        arrayTraiCay.add(new TraiCay("Mít","Mít thơm nhà ngoại",R.drawable.qua_mit));
+        arrayTraiCay.add(new TraiCay("Sầu Riêng","Sầu Riêng Nam Bộ",R.drawable.sau_rieng));
+    }
+}

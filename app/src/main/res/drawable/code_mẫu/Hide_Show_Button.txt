@@ -1,0 +1,10 @@
+ btnHideShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(imageView.getVisibility() == View.VISIBLE){
+                    imageView.setVisibility(View.GONE);
+                }else{
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            }
+        });

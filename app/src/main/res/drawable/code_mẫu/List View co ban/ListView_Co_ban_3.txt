@@ -1,0 +1,170 @@
+B1 : Tao 1 lop Contact(VD)
++ trong lop khai bao cac doi tuong
++ tao cac ham get set , constructor
++ tao 1 toString
+
+public class Contact {
+    private String id;
+    private String name ;
+    private String phone;
+
+    public Contact() {
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return this.id+"-"+this.name+"\n"+this.phone;
+    }
+}
+
+b2 : file xml cho listView
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mã" />
+
+    <EditText
+        android:hint="Nhập mã ở đây"
+        android:id="@+id/edtMa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên:" />
+
+    <EditText
+        android:id="@+id/edtTen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Tên ở đây"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Số phone" />
+
+    <EditText
+        android:id="@+id/edtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Phone ở đây"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lưu Contact" />
+
+    <Button
+        android:onClick="ThoatChươngTrinh"
+        android:id="@+id/btnThoat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thoát" />
+
+    <ListView
+        android:id="@+id/lvData3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@color/teal_200" />
+
+
+B3 : 
+// Tao 1 class cung package voi MainClass
+ Button btn;
+    EditText edtMa , edtTen , edtPhone;
+    ListView lvContact;
+    ArrayAdapter<Contact> contactAdapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_view3);
+        addControls();
+        addEvents();
+    }
+
+    private void addEvents() {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                xuLyThemContact();
+            }
+        });
+        lvContact.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact c =  contactAdapter.getItem(position);
+
+                contactAdapter.remove(c);
+                return false;
+            }
+        });
+        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact c = contactAdapter.getItem(position);
+                edtMa.setText(c.getId());
+                edtTen.setText(c.getName());
+                edtPhone.setText(c.getPhone());
+
+            }
+        });
+    }
+
+    private void xuLyThemContact() {
+        Contact c = new Contact();
+        c.setId(edtMa.getText().toString());
+        c.setName(edtTen.getText().toString());
+        c.setPhone(edtPhone.getText().toString());
+
+        contactAdapter.add(c);
+    }
+
+
+    private void addControls() {
+        edtMa = (EditText) findViewById(R.id.edtMa);
+        edtTen = (EditText) findViewById(R.id.edtTen);
+        edtPhone = (EditText) findViewById(R.id.edtPhone);
+        btn = (Button) findViewById(R.id.button);
+        lvContact = (ListView) findViewById(R.id.lvData3);
+        contactAdapter = new ArrayAdapter<Contact>(ListView3.this, android.R.layout.simple_list_item_1);
+        lvContact.setAdapter(contactAdapter);
+    }

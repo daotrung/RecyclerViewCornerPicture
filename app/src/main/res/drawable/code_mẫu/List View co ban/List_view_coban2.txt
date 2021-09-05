@@ -1,0 +1,38 @@
+// tao 1 class
+// tao 1bien string-array
+// tao 1 listView tai file xml cua class vua tao
+    ListView lvData2 ;
+    String arrData2[];
+    ArrayAdapter<String> adapter2;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_view2);
+        addControls();
+        addEvents();
+    }
+
+    private void addControls() {
+        lvData2 = (ListView) findViewById(R.id.lvData2);
+        arrData2 = getResources().getStringArray(R.array.myArray);
+        adapter2 = new ArrayAdapter<String>(ListView2.this, android.R.layout.simple_list_item_1,arrData2);
+        lvData2.setAdapter(adapter2);
+    }
+
+    private void addEvents() {
+         lvData2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             @Override
+             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                 Toast.makeText(ListView2.this, "Bạn chọn : "+arrData2[position], Toast.LENGTH_SHORT).show();
+             }
+         });
+         lvData2.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+             @Override
+             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                 String s = arrData2[position];
+                 adapter2.remove(s);
+                 return false;
+             }
+         });
+    } 

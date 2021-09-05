@@ -1,0 +1,92 @@
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText edt_nhap;
+    Button btn_XuLy;
+    TextView txtKetQua ;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        addControls();
+        addEvents();
+    }
+
+    private void addEvents() {
+        btn_XuLy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                xuLyMoManHinh();
+            }
+        });
+    }
+
+    private void xuLyMoManHinh() {
+        Intent intent = new Intent(MainActivity.this,XuLyUocSo.class);
+        intent.putExtra("N",Integer.parseInt(edt_nhap.getText().toString()));
+        startActivityForResult(intent,113);  // mã yêu cầu : 113
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==113 && resultCode==115){
+            ArrayList<Integer>dsUS = data.getIntegerArrayListExtra("DSUS");
+            txtKetQua.setText("");
+            for(int us : dsUS){
+                txtKetQua.append(us+"\n");
+            }
+        }
+    }
+
+    private void addControls() {
+        edt_nhap = (EditText) findViewById(R.id.edt_nhap);
+        btn_XuLy = (Button) findViewById(R.id.btnXuLy);
+        txtKetQua = (TextView) findViewById(R.id.txtKetQua);
+
+    }
+
+
+
+
+    TextView txtN ;
+    Button btnTraVe;
+    Intent intent= null;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_xu_ly_uoc_so);
+        addControls();
+        addEvents();
+    }
+
+    private void addEvents() {
+        btnTraVe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                xuLyTraUocSo();
+            }
+        });
+    }
+
+    private void xuLyTraUocSo() {
+        int n = Integer.parseInt(txtN.getText().toString());
+        ArrayList<Integer> dsUS  = new ArrayList<>();
+        for(int i = 1 ; i < n ; i++){
+            if(n%i==0){
+                dsUS.add(i);
+            }
+        }
+        intent.putExtra("DSUS",dsUS);
+        setResult(115,intent);
+        finish();
+    }
+    private void addControls() {
+        intent= getIntent();
+        int n = intent.getIntExtra("N",0);
+        txtN = (TextView) findViewById(R.id.txtDisplay);
+        btnTraVe = (Button) findViewById(R.id.btnTraVe);
+        txtN.setText(n+"");
+
+    }
